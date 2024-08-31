@@ -1,1 +1,46 @@
+@import "./themes/variables.scss";
 /* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
+// Variable overrides first
+$primary: #900;
+$enable-shadows: true;
+$prefix: "mo-";
+
+// Then import Bootstrap
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  min-width: 320px;
+  scroll-behavior: smooth;
+}
+
+ul:focus,
+li:focus,
+a:focus,
+button:focus {
+  outline: unset;
+}
+
+ul,
+ol,
+li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+button {
+  cursor: pointer;
+}
+
+
+.cursor-pointer {
+  cursor: pointer;
+}

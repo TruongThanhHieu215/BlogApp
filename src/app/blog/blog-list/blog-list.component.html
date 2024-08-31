@@ -1,0 +1,61 @@
+<div class="mb-5">
+	<div class="d-flex justify-content-between flex-column gap-4">
+		<div class="d-flex gap-3 flex-shrink-1 align-items-center">
+			<label for="typeahead-basic">Search: </label>
+			<input id="typeahead-basic" class="form-control me-2" type="search" class="form-control"
+				[(ngModel)]="pagination.search" #inputField />
+		</div>
+		<div class="d-flex gap-3 w-100">
+			<div class="d-flex gap-3 flex-shrink-1 align-items-center">
+				<label class="text-nowrap">Sort Direction:</label>
+				<div class="border rounded p-1 cursor-pointer"
+					[ngStyle]="{ 'background-color': pagination.sort_direction === 'asc' ? 'lightgray' : 'white'}">
+					<i-bs name="sort-up" width="16" height="16" (click)="sort('asc')"></i-bs>
+				</div>
+				<div class="border rounded p-1 cursor-pointer"
+					[ngStyle]="{ 'background-color': pagination.sort_direction === 'desc' ? 'lightgray' : 'white'}">
+					<i-bs name="sort-down" width="16" height="16" (click)="sort('desc')"></i-bs>
+				</div>
+			</div>
+
+			<div class="d-flex gap-3 flex-shrink-1 align-items-center">
+				<label class="text-nowrap">Sort By:</label>
+				<select class="form-select" aria-label="Sort By" [(ngModel)]="pagination.sort_by">
+					<option *ngFor="let item of sortBy" [value]="item">{{ item }}</option>
+				</select>
+			</div>
+
+			<div class="d-flex gap-3 flex-shrink-1 align-items-center">
+				<label class="text-nowrap">Limit:</label>
+				<select class="form-select" aria-label="Limit" [(ngModel)]="pagination.offset">
+					<option *ngFor="let item of limits" [value]="item">{{ item }}</option>
+				</select>
+			</div>
+
+			<div>
+				<button type="button" class="btn btn-primary cursor-pointer" (click)="navigateWithQueryParams()">Filter</button>
+			</div>
+		</div>
+	</div>
+	<ul class="list-unstyled">
+		<li class="media d-flex justify-content-between p-3 border my-3 rounded cursor-pointer" *ngFor="let blog of data"
+			(click)="navigateTo('blog/list/' + blog.id)">
+			<div class="media d-flex align-items-center gap-4">
+				<img src="{{blog.image.url}}" class="img-thumbnail" style="width: 10rem; height: 10rem; object-fit: cover;"
+					alt="{{blog.title}}" onerror="this.src='../assets/images/default-fallback-image.png'">
+				<div class="media-body">
+					<h5 class="mt-0 mb-1">{{blog.title}}</h5>
+					<p [innerHTML]="blog.content" style="white-space: pre-line;"></p>
+				</div>
+			</div>
+			<i-bs name="pencil-square" width="24" height="24" (click)="navigateTo('blog/edit/'+ blog.id)">
+			</i-bs>
+		</li>
+	</ul>
+
+	<div class="d-flex justify-content-center">
+		<ngb-pagination *ngIf="pagination.count > pagination.offset" [collectionSize]="pagination.count"
+			[(page)]="pagination.page" [pageSize]="pagination.offset" [boundaryLinks]="true" (pageChange)="navigateWithQueryParams()">
+		</ngb-pagination>
+	</div>
+</div>
